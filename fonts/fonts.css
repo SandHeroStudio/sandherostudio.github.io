@@ -1,0 +1,55 @@
+/* @font-face {
+	font-family: 'Raleway';
+	src: url('Raleway-Regular.ttf');
+	src: url('Raleway-Regular.eot');
+	src: url('Raleway-Regular.woff2') format('woff2'),
+	url('Raleway-Regular.woff') format('woff'),
+	url('Raleway-Regular.otf') format("opentype"),
+	url('Raleway-Regular.ttf') format('truetype'),
+	url('Raleway-Regular.svg#Raleway-Regular') format('svg'),
+	url('Raleway-Regular.eot?#iefix') format('embedded-opentype');
+	font-style: normal;
+} */
+
+@font-face {
+	font-family: 'pix1';
+	src: url('pix1.ttf');
+	src: url('pix1.ttf') format('truetype');
+	font-style: normal;
+}
+@font-face {
+	font-family: 'pix2';
+	src: url('pix2.ttf');
+	src: url('pix2.ttf') format('truetype');
+	font-style: normal;
+}
+@font-face {
+	font-family: 'pix3';
+	src: url('pix3.ttf');
+	src: url('pix3.ttf') format('truetype');
+	font-style: normal;
+}
+@font-face {
+	font-family: 'rub_black';
+	src: url('rub_black.ttf');
+	src: url('rub_black.ttf') format('truetype');
+	font-style: normal;
+}
+@font-face {
+	font-family: 'rub_empty';
+	src: url('rub_empty.ttf');
+	src: url('rub_empty.ttf') format('truetype');
+	font-style: normal;
+}
+@font-face {
+	font-family: 'rub_emptyB';
+	src: url('rub_emptyB.ttf');
+	src: url('rub_emptyB.ttf') format('truetype');
+	font-style: normal;
+}
+@font-face {
+	font-family: 'rub_italic';
+	src: url('rub_italic.ttf');
+	src: url('rub_italic.ttf') format('truetype');
+	font-style: normal;
+}

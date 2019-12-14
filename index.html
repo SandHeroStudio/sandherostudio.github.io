@@ -4,14 +4,18 @@
 	<meta charset="utf-8" />
   <title>Sand Hero Studio</title>
   <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Girassol&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./fonts/fonts.css"/>
   <style>
     html{
       width: 100%;
       height: 100%;
-      font-family: 'Lilita One', cursive;
+      /* font-family: 'Lilita One', cursive; */
+      /* font-family: 'Girassol', cursive; */
+      
     }
     body{
-      background-color: rgb(141, 131, 131);
+      background-color: #3d6090;
       margin: 0;
       padding: 0;
       width: 100%;
@@ -21,28 +25,209 @@
       width: 100%;
       height: 100%;
     }
+    .moon{
+      position: absolute;
+      top: 13px;
+      left: 22px;
+    }
     .title{
-      padding: 10px;
-      font-size: 59px;
+      font-family: 'rub_black';
+      font-size: 80px;
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      padding-top: 33px;
+      outline: 1000px solid rgba(0,0,0,0);
+    }
+    .imgBack{
+      background-image: url(img/back.png);
+      height: 267px;
     }
     .descr{
-      padding: 17px;
-      line-height: 31px;
+      font-family: 'pix3';
+      padding: 20px;
+      line-height: 28px;
     }
+   
   </style>
 </head>
 <body>
   <div class="main">
       <div class="title">Sand Hero Studio</div>
+      <img class='moon' src="img/moon.png"/>
+      <div class="imgBack">
+        <!-- clouds here -->
+      </div>
+      
+
       <div class="descr">
           <div>pixel art indie studio</div>
           <div>site in progress...</div>
-          <div>contacts: <b>sandherostudio@gmail.com</b></div>
+          <div>contacts: sandherostudio@gmail.com</div>
       </div>
       
   </div>
 
+  <script>
+/*--------*/
+/* TODO */
+// 01)  ДОБАВИТЬ ЛУНУ
+// 02)  ДОБАВИТЬ НАДПИСЬ В СТИЛИ PIXEL ART которая плавает(вверх вниз (немного)) и появляется и исчезает
+// 03)  Сделать пиксель арт музыку (тихо)
+// 04)  MATERIAL (style)
+//https://www.google.com/imgres?imgurl=http%3A%2F%2Fekmedia.info%2Fwp-content%2Fuploads%2F2018%2F11%2Fgraphic-design-template-website-header-design-for-website-in-html-60-best-single-page-website-download.jpg&imgrefurl=http%3A%2F%2Fekmedia.info%2Fgraphic-design-template-website%2F&docid=4c7q8d-hf2aq-M&tbnid=dwhfkPxouDdtxM%3A&vet=12ahUKEwjmyeGl57TmAhXNmIsKHSbKC0Y4ZBAzKAEwAXoECAEQAg..i&w=690&h=601&bih=700&biw=1440&q=single%20page%20design&ved=2ahUKEwjmyeGl57TmAhXNmIsKHSbKC0Y4ZBAzKAEwAXoECAEQAg&iact=mrc&uact=8
 
+/*--------*/
+/* State */
+let MyGame= {};
+
+
+//настройки производительности
+//если поставить больше герцовки монитора то - не будет отрисовывать больше
+let FrameLimitFPS = 60;
+//если true - используем рендер с лимитом кадров(можно включить больше герцовки монитора)
+//если false - рендер использует все возможности компьютера(включать только на мощных компьютерах)
+let useFrameLimitRender = true;
+//рассчет fps
+//fpsNow
+let fpsNowArr = [];
+let fpsCurSec = 0;
+let fpsNowBlock = document.getElementById("fpsNow");
+//игровой предмет(только для дэмо - УДАЛИТЬ)
+let block1 = document.getElementById("block1");
+/*---------*/
+/* Engine */
+	(function () {
+		function main( tFrame ) {
+			//запускать requestAnimationFrame нужно именно здесь(чтобы браузер получил кадр вовремя)
+			MyGame.stopMain = window.requestAnimationFrame( main );
+			let nextTick = MyGame.lastTick + MyGame.tickLength;
+			let numTicks = 0;
+			if (tFrame > nextTick) {
+				let timeSinceTick = tFrame - MyGame.lastTick;
+				numTicks = Math.floor( timeSinceTick / MyGame.tickLength );
+			}
+			if(!useFrameLimitRender){
+			  	render( tFrame );
+			}
+			else{
+				if(numTicks===1){
+					MyGame.lastTick = MyGame.lastTick + MyGame.tickLength; // Now lastTick is this tick.
+			  		render(tFrame);
+				}
+				//был баг - если перейти на другую вкладку а потом вернуться - ограничение фпс слетало
+				else if(numTicks>1){
+					MyGame.lastTick = performance.now();
+				}
+			}
+		}
+
+		MyGame.lastTick = performance.now();
+		MyGame.tickLength = 1000/FrameLimitFPS;
+		
+		main(performance.now()); // Start the cycle
+	})();
+
+
+/*---------*/
+/* Render */
+function render(tick){
+	//console.log('--tick',tick);
+  createClouds(tick);
+  titleWaving(tick);
+};
+
+/*---------*/
+/* waving */
+var titleTop = 0;
+var direction = true;
+function titleWaving(tick){
+  var elem = document.getElementsByClassName('title')[0];
+  if(titleTop<3&&direction){
+    titleTop+=0.05;
+  }
+  else if(titleTop>0){
+    direction=false;
+    titleTop-=0.05;
+  }
+  else{
+    direction=true;
+  }
+  elem.style.top = titleTop+'px';
+  
+}
+
+
+/*---------*/
+/* clouds */
+// tick
+// quantity
+var cloud1StartPoint;
+var cloud2StartPoint;
+var cloud3StartPoint;
+var cloudObj = {};
+
+
+function createClouds(tick){
+  //console.log('---',window.innerWidth);
+  let screenW = window.innerWidth;
+
+  ////---- CLOUD 1
+  //не создан, нужно создать
+  currentCloudControl(cloudObj,-507,0,screenW,1,'cloud1',0,"img/cloud1.png");
+
+  ////---- CLOUD 2
+  //не создан, нужно создать
+  currentCloudControl(cloudObj,-507-screenW,250,screenW,1.5,'cloud2',0,"img/cloud2.png");
+  
+  ////---- CLOUD 3
+  //не создан, нужно создать
+  currentCloudControl(cloudObj,-507,500,screenW,1.2,'cloud3',-5,"img/cloud2.png");
+  
+  ////---- CLOUD 4
+  //не создан, нужно создать
+  currentCloudControl(cloudObj,-507,1000,screenW,2,'cloud4',-5,"img/cloud1.png");
+  
+}
+//state - obj - ссылка на внешнюю переменную
+//start - -507 (больше чем ширина картинки)
+//startDelay - задержка перед запуском
+//screenW - ширина экрана (window.innerWidth);
+//speed - 1.2
+//id - 'cloud3'
+//margTop - -5 смещение вверх или вниз облака
+//url - 'img/cloud2.png'
+function currentCloudControl(state,start,startDelay,screenW,speed,id,marginTop,url){
+  //не создан, нужно создать
+  if(state[id]===undefined){
+    state[id] = start; //screen size
+    //innerHTML
+    document.getElementsByClassName('imgBack')[0].innerHTML += `<img style="position:absolute; marginTop: ${marginTop}px" class="cloud" id=${id} src="${url}"/>`;
+    //style
+    var elem = document.getElementById(id);
+    elem.style.right = state[id]+'px';
+    //only START! delay
+    currentCloudControl[id] = startDelay;
+  }
+  else if(screenW>state[id]){
+    if(currentCloudControl[id]>0&&!currentCloudControl[id+'_DELAY']){
+      currentCloudControl[id]-=1;
+    }
+    else{
+      currentCloudControl[id+'_DELAY'] = true;
+      state[id]+=speed;
+      var elem = document.getElementById(id);
+      elem.style.right = state[id]+'px';
+    }
+  }
+  else{
+    var elem = document.getElementById(id);
+    elem.remove();
+    state[id] = undefined;
+  }
+}
+
+</script>
 <body>
 	
 </body>
