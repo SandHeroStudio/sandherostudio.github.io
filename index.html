@@ -82,16 +82,16 @@
     width: 100%;
     background-size: cover;
     background-position: center;
-    background-repeat: repeat-x;
+    background-repeat: no-repeat;
 }
 
 .fog::before{
     left: 100%;
-    background-image: url("img/test.png");
+    background-image: url("img/fog-1.png");
     animation: fogmove 10s linear 0s infinite;
 }
 .fog::after{
-    background-image: url("img/test.png");
+    background-image: url("img/fog-1.png");
     animation: fogmove 10s linear 0s infinite;
 }
 @keyframes fogmove {
@@ -186,10 +186,10 @@ let block1 = document.getElementById("block1");
 
 /*---------*/
 /* Render */
-function render(tick){
-	//console.log('--tick',tick);
-  createClouds(tick);
-  titleWaving(tick);
+function render(time,diff){
+	// console.log('--time',time);
+  createClouds(time);
+  titleWaving(time);
 };
 
 /*---------*/
