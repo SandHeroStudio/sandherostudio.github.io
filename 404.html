@@ -27,25 +27,36 @@
       position: relative;
       overflow: hidden;
     }
-      .moon{
-        position: absolute;
-        top: 17px;
-        left: 22px;
-      }
       .title{
         font-family: 'rub_black';
         font-size: 80px;
         position: absolute;
+        top: 0;
         width: 100%;
         text-align: center;
         padding-top: 33px;
         outline: 1000px solid rgba(0,0,0,0);
-
-        text-shadow: 1px 1px 2px black, 0 0 1em rgb(255, 251, 0);
+        text-shadow: 1px 1px 2px black, 0 0 12px rgb(56, 56, 0);
       }
       .imgBack{
-        background-image: url(img/back.png);
-        height: 267px;
+        background-image: url(images/BackGr.png);
+        height: 512px;
+      }
+      .imgGround{
+        top:0;
+        position: absolute;
+        width: calc(100% + 512px);
+        height: 512px;
+        background-image: url(images/PlantsPNG.png);
+        animation: imgGroundMove 10s linear 0s infinite;
+      }
+      @keyframes imgGroundMove {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+        to {
+            transform: translate3d(-512px, 0, 0);
+        }
       }
       .descr{
         font-family: 'pix3';
@@ -115,6 +126,7 @@
       <div class="imgBack">
         <!-- clouds here -->
       </div>
+      <div class="imgGround"></div>
       <!-- <div class="title">Sand Hero Studio</div> -->
       <!-- <div class="fog"></div> -->
 
@@ -264,26 +276,21 @@ function createClouds(tick, diff){
   //console.log('---',window.innerWidth);
   let screenW = window.innerWidth;
 
-  ////---- CLOUD 1
-  //не создан, нужно создать
+  ////---- Ground
   // currentCloudControl(cloudObj,-507,0,screenW,diff/16*1,'cloud1',0,"img/cloud1.png");
 
 
   ////---- CLOUD 2
-  //не создан, нужно создать
   // currentCloudControl(cloudObj,-507-screenW,250,screenW,diff/16*1.5,'cloud2',0,"img/cloud2.png");
 
 
   ////---- CLOUD 3
-  //не создан, нужно создать
   // currentCloudControl(cloudObj,-507,500,screenW,diff/16*1.2,'cloud3',-5,"img/cloud2.png");
   
   ////---- CLOUD 4
-  //не создан, нужно создать
   // currentCloudControl(cloudObj,-507,1000,screenW,diff/16*2,'cloud4',-5,"img/cloud1.png");
 
   ////---- GHOST
-  //не создан, нужно создать
   // currentCloudControl(cloudObj,-70,0,screenW,diff/16*0.7,'ghost',500,"img/ghost.gif");
 
   
