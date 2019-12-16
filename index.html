@@ -79,20 +79,20 @@
     top: 0;
     left: 0;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .fog::before{
     left: 100%;
-    background-image: url("img/test.png");
-    /* background-image: url("img/fog-1.png"); */
+    /* background-image: url("img/test.png"); */
+    background-image: url("img/fog-1.png");
     animation: fogmove 10s linear 0s infinite;
 }
 .fog::after{
-    background-image: url("img/test.png");
-    /* background-image: url("img/fog-1.png"); */
+    /* background-image: url("img/test.png"); */
+    background-image: url("img/fog-1.png");
     animation: fogmove 10s linear 0s infinite;
 }
 @keyframes fogmove {
