@@ -106,7 +106,11 @@
 </head>
 <body>
   <div class="main">
-     
+    <!-- FPS -->
+      <!-- <div style="position: absolute; top: 0; left: 15px" id='fpsNow'>0</div>
+      <div style="display: inline-block; position: absolute; left: 6px; top: 0;"class="anim" id='spinner'>|</div> -->
+    <!--     -->
+
       <img class='moon' src="img/moon.png"/>
       <div class="imgBack">
         <!-- clouds here -->
@@ -135,7 +139,7 @@
 /*--------*/
 /* State */
 let MyGame= {};
-
+let prevTick = 0;
 
 //настройки производительности
 //если поставить больше герцовки монитора то - не будет отрисовывать больше
@@ -143,13 +147,16 @@ let FrameLimitFPS = 60;
 //если true - используем рендер с лимитом кадров(можно включить больше герцовки монитора)
 //если false - рендер использует все возможности компьютера(включать только на мощных компьютерах)
 let useFrameLimitRender = true;
+
 //рассчет fps
 //fpsNow
 let fpsNowArr = [];
 let fpsCurSec = 0;
 let fpsNowBlock = document.getElementById("fpsNow");
-//игровой предмет(только для дэмо - УДАЛИТЬ)
-let block1 = document.getElementById("block1");
+
+//fps spinner
+let spinner = document.getElementById("spinner");
+
 /*---------*/
 /* Engine */
 	(function () {
@@ -163,12 +170,21 @@ let block1 = document.getElementById("block1");
 				numTicks = Math.floor( timeSinceTick / MyGame.tickLength );
 			}
 			if(!useFrameLimitRender){
-			  	render( tFrame );
+          // считаем разницу между тиками
+          let diff = tFrame - prevTick;
+			  	render( tFrame, diff );
+          // записываем предыдущий тик
+          prevTick = tFrame;
 			}
 			else{
 				if(numTicks===1){
 					MyGame.lastTick = MyGame.lastTick + MyGame.tickLength; // Now lastTick is this tick.
-			  		render(tFrame);
+
+          // считаем разницу между тиками
+          let diff = tFrame - prevTick;
+			  	render( tFrame, diff );
+          // записываем предыдущий тик
+          prevTick = tFrame;
 				}
 				//был баг - если перейти на другую вкладку а потом вернуться - ограничение фпс слетало
 				else if(numTicks>1){
@@ -183,13 +199,34 @@ let block1 = document.getElementById("block1");
 		main(performance.now()); // Start the cycle
 	})();
 
+/*------*/
+/* FPS */
+function fps(tick){
+  
+  spinner.style.transform = "rotate("+tick/1.3+"deg)";
+
+	//console.log(Math.floor(tick/1000));
+	let roundTick = Math.floor(tick/1000);
+	if(roundTick===fpsCurSec){
+		fpsNowArr.push('');
+	}
+	else{
+		fpsNowBlock.innerHTML = fpsNowArr.length;
+		fpsNowArr = [''];
+		fpsCurSec = roundTick;
+	}
+}
+
 
 /*---------*/
 /* Render */
-function render(time,diff){
-	// console.log('--time',time);
-  createClouds(time);
-  titleWaving(time);
+//tick - общее время
+//diff разница между тиками
+function render(tick, diff){
+
+  // fps(tick)
+  createClouds(tick, diff);
+  titleWaving(tick)
 };
 
 /*---------*/
@@ -223,29 +260,31 @@ var cloud3StartPoint;
 var cloudObj = {};
 
 
-function createClouds(tick){
+function createClouds(tick, diff){
   //console.log('---',window.innerWidth);
   let screenW = window.innerWidth;
 
   ////---- CLOUD 1
   //не создан, нужно создать
-  currentCloudControl(cloudObj,-507,0,screenW,1,'cloud1',0,"img/cloud1.png");
+  currentCloudControl(cloudObj,-507,0,screenW,diff/16*1,'cloud1',0,"img/cloud1.png");
+
 
   ////---- CLOUD 2
   //не создан, нужно создать
-  currentCloudControl(cloudObj,-507-screenW,250,screenW,1.5,'cloud2',0,"img/cloud2.png");
-  
+  currentCloudControl(cloudObj,-507-screenW,250,screenW,diff/16*1.5,'cloud2',0,"img/cloud2.png");
+
+
   ////---- CLOUD 3
   //не создан, нужно создать
-  currentCloudControl(cloudObj,-507,500,screenW,1.2,'cloud3',-5,"img/cloud2.png");
+  currentCloudControl(cloudObj,-507,500,screenW,diff/16*1.2,'cloud3',-5,"img/cloud2.png");
   
   ////---- CLOUD 4
   //не создан, нужно создать
-  currentCloudControl(cloudObj,-507,1000,screenW,2,'cloud4',-5,"img/cloud1.png");
+  currentCloudControl(cloudObj,-507,1000,screenW,diff/16*2,'cloud4',-5,"img/cloud1.png");
 
   ////---- GHOST
   //не создан, нужно создать
-  currentCloudControl(cloudObj,-70,0,screenW,0.7,'ghost',500,"img/ghost.gif");
+  currentCloudControl(cloudObj,-70,0,screenW,diff/16*0.7,'ghost',500,"img/ghost.gif");
 
   
 }
