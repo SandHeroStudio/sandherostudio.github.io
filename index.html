@@ -69,6 +69,7 @@
     height: 100vh;
     overflow: hidden;
     opacity: 0.6;
+    filter: blur(12px);
 }
 .fog::before,
 .fog::after,
@@ -86,11 +87,11 @@
 
 .fog::before{
     left: 100%;
-    background-image: url("img/fog2.png");
+    background-image: url("img/fog4.png");
     animation: fogmove 10s linear 0s infinite;
 }
 .fog::after{
-    background-image: url("img/fog2.png");
+    background-image: url("img/fog4.png");
     animation: fogmove 10s linear 0s infinite;
 }
 @keyframes fogmove {
