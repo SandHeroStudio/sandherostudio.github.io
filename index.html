@@ -29,17 +29,17 @@
     }
       .title{
         font-family: 'rub_black';
-        font-size: 80px;
+        font-size: 60px;
         position: absolute;
         top: 0;
         width: 100%;
         text-align: center;
-        padding-top: 33px;
+        padding-top: 13px;
         outline: 1000px solid rgba(0,0,0,0);
         text-shadow: 1px 1px 2px black, 0 0 12px rgb(56, 56, 0);
       }
       .imgBack{
-        background-image: url(images/BackGr.png);
+        background-image: url(images/BackGrFonBehind.png);
         height: 512px;
       }
       .rider{
@@ -64,19 +64,19 @@
       }
       .imgGround{
         top:0;
-        left: -512px;
+        left: -1920px;
         position: absolute;
-        width: calc(100% + 512px);
-        height: 512px;
-        background-image: url(images/PlantsPNG.png);
-        animation: imgGroundMove 10s linear 0s infinite;
+        width: calc(100% + 1920px);
+        height: 1920px;
+        background-image: url(images/BackGrFonCloser.png);
+        animation: imgGroundMove 30s linear 0s infinite;
       }
       @keyframes imgGroundMove {
         from {
             transform: translate3d(0, 0, 0);
         }
         to {
-            transform: translate3d(512px, 0, 0);
+            transform: translate3d(1920px, 0, 0);
         }
       }
 
