@@ -60,6 +60,23 @@
             transform: translate3d(512px, 0, 0);
         }
       }
+      .distantGround{
+        top:0;
+        left: -1920px;
+        position: absolute;
+        width: calc(100% + 1920px);
+        height: 512px;
+        background-image: url(images/BackGrFonMedium.png);
+        animation: imgDistGroundMove 90s linear 0s infinite;
+      }
+      @keyframes imgDistGroundMove {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+        to {
+            transform: translate3d(1920px, 0, 0);
+        }
+      }
       .rider{
         position: absolute;
         top: 251px;
@@ -168,6 +185,7 @@
         <!-- clouds here -->
       </div>
       <div class="clouds"></div>
+      <div class="distantGround"></div>
       
       <div class="rider">
         <img src="images/HeroHorse.gif"/>
