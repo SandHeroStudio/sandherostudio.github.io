@@ -42,6 +42,24 @@
         background-image: url(images/BackGrFonBehind.png);
         height: 512px;
       }
+      .clouds{
+        position: absolute;
+        top: 0;
+        left: -512px;
+        background-image: url(images/CloudsPNG.png);
+        width: 100%;
+        height: 80px;
+        width: calc(100% + 512px);
+        animation: imgCloudsMove 50s linear 0s infinite;
+      }
+      @keyframes imgCloudsMove {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+        to {
+            transform: translate3d(512px, 0, 0);
+        }
+      }
       .rider{
         position: absolute;
         top: 251px;
@@ -149,6 +167,7 @@
       <div class="imgBack">
         <!-- clouds here -->
       </div>
+      <div class="clouds"></div>
       
       <div class="rider">
         <img src="images/HeroHorse.gif"/>
